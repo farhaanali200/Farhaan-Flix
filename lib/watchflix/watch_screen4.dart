@@ -16,11 +16,13 @@ class _BetterVersionState extends State<BetterVersion> {
   @override
   void initState() {
     BetterPlayerConfiguration betterPlayerConfiguration = BetterPlayerConfiguration(
+      autoPlay: true,
         aspectRatio: 16/9,
         fit: BoxFit.cover
     );
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
+        // "https://storage.googleapis.com/blissful-mile-315400/LTDJ2RBQ6WWM/22a_1624141693_25056.mp4"
         widget.link!
     );
     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
@@ -31,6 +33,7 @@ class _BetterVersionState extends State<BetterVersion> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.link);
     return Scaffold(
       body: AspectRatio(
         aspectRatio: 16/9,

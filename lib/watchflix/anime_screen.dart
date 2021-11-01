@@ -3,7 +3,6 @@ import 'services.dart';
 import 'anime.dart';
 import 'episodes.dart';
 
-
 class Screen extends StatefulWidget {
   final String? animeName;
 
@@ -14,19 +13,37 @@ class Screen extends StatefulWidget {
 }
 
 class _ScreenState extends State<Screen> {
-  List<Anime>? _anime;
+
+  var _anime;
   bool _loading = false;
+  Services services = Services();
 
   @override
   void initState() {
     super.initState();
     _loading = false;
-    Services.getAnime(widget.animeName!).then((anime) {
+    // Services.getAnime(widget.animeName!).then((anime) {
+    //   setState(() {
+    //     _anime = anime;
+    //     _loading = true;
+    //   });
+    // });
+
+    err();
+
+  }
+
+  Future err() async{
+    try{
+      final serv = await services.getAnime(widget.animeName!);
       setState(() {
-        _anime = anime;
+        _anime = serv;
         _loading = true;
       });
-    });
+    } catch(e) {
+      print(e);
+    }
+
   }
 
   @override
@@ -47,17 +64,17 @@ class _ScreenState extends State<Screen> {
 
 
     return Scaffold(
-      appBar: AppBar(
-          actions: <Widget>[
-             TextField(
-               controller: textEditingController,
-               decoration: InputDecoration(
-                 // icon: Icon(Icons.search),
-                 hintText: "Type Anime...",
-               ),
-             )
-          ]
-      ),
+      // appBar: AppBar(
+      //     actions: <Widget>[
+      //        TextField(
+      //          controller: textEditingController,
+      //          decoration: InputDecoration(
+      //            // icon: Icon(Icons.search),
+      //            hintText: "Type Anime...",
+      //          ),
+      //        )
+      //     ]
+      // ),
       body: _loading? GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -91,13 +108,14 @@ class _ScreenState extends State<Screen> {
                                   child: Container(
                                     height: 60,
                                     width: 186,
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                     child: Center(
                                       child: Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Text(anime.title!, style: TextStyle(
                                         fontSize: 15,
-                                        foreground: Paint()..shader = linearGradient
+                                        color: Colors.white
+                                        // foreground: Paint()..shader = linearGradient
                                     )),
                                       ),),
                                   ),

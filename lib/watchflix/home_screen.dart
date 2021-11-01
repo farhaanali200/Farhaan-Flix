@@ -12,6 +12,13 @@ class _HScreenState extends State<HScreen> {
   Widget appBarTitle = new Text("Search....");
   Icon actionIcon = new Icon(Icons.search);
 
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
@@ -23,7 +30,9 @@ class _HScreenState extends State<HScreen> {
     }
 
     return Scaffold(
-      appBar: new AppBar(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.deepPurpleAccent,
         // centerTitle: true,
         title: appBarTitle,
         actions: <Widget>[
@@ -49,25 +58,19 @@ class _HScreenState extends State<HScreen> {
                 );}
               else {
                 this.actionIcon = new Icon(Icons.search);
-                this.appBarTitle = new Text("AppBar Title");
+                this.appBarTitle = new Text("Search...");
               }
 
 
             });
           } ,),]
     ),
+
+
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.green, Colors.blue])
-        ),
-        child: Center(
-          child: Text('Gradients are cool!',
-            style: TextStyle(
-              fontSize: 35,
-              color: Colors.white,
-            ),
-          ),
+                colors: [Colors.green, Colors.blue, Colors.deepPurpleAccent ])
         ),
       ),
     );

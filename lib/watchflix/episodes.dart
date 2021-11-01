@@ -1,14 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hoho/json_model_class/watch_screen.dart';
-import 'package:hoho/json_model_class/watch_screen2.dart';
-import 'package:hoho/json_model_class/watch_screen3.dart';
 import 'package:hoho/json_model_class/watch_screen4.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_parsed_text/flutter_parsed_text.dart';
-import 'package:better_player/better_player.dart';
-import 'package:video_player/video_player.dart';
-
 
 class Episodes extends StatefulWidget {
   final String? link;
@@ -66,6 +59,11 @@ class _EpisodesState extends State<Episodes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: isLoading? AppBar(
+        backgroundColor: Colors.black,
+        title: Text("Total Episodes: $totalEp", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+      ) : null,
       body: isLoading? GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 6,
@@ -94,6 +92,7 @@ class _EpisodesState extends State<Episodes> {
                  http.Response resp = await http.get(Uri.parse(epLink));
                  print("CODE RED TEST");
                  final respBody = resp.body;
+                 final decodedlink = jsonDecode(respBody);
 
                  // final regex = RegExp(r'^((?:.|\n)*?)((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?)');
 
@@ -105,15 +104,17 @@ class _EpisodesState extends State<Episodes> {
 
 
                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                 return BetterVersion(link: respBody);
+                 return BetterVersion(link: decodedlink);
                }));
 
               },
 
 
               child: Card(
-                color: Colors.yellow,
-                child: Center(child: Text("$ind")),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                // color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                color: Colors.greenAccent,
+                child: Center(child: Text("$ind", style: TextStyle(color: Colors.white))),
               ),
             );
       }
